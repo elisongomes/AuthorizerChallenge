@@ -29,13 +29,13 @@ public class TransactionServiceImpl implements TransactionServicePort {
             .add(new DoubleTransactionViolation())
             .validate(transaction);
 
-        this.violations = transactionViolationService.getViolations();
+        violations = transactionViolationService.getViolations();
 
-        return this.violations.isEmpty();
+        return violations.isEmpty();
     }
 
     @Override
     public List<String> getViolations() {
-        return this.violations;
+        return violations;
     }
 }

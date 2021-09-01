@@ -7,19 +7,19 @@ import esg.secret.authorizerchallenge.infraestructure.shared.exceptions.Violatio
 
 public class AccountNotInitializedViolation extends AbstractAccountNotInitializedViolation {
     public AccountNotInitializedViolation() {
-        this.stopOnFails = true;
+        stopOnFails = true;
     }
 
     @Override
     public boolean validate(Transaction transaction) throws ViolationException {
         if (!(new AccountRepositoryImpl()).accountHasBeenInitialized()) {
-            this.fail();
+            fail();
         }
         return true;
     }
 
     @Override
     public boolean stopOnFails() {
-        return this.stopOnFails;
+        return stopOnFails;
     }
 }

@@ -17,10 +17,10 @@ public class CreateTransactionUseCaseImpl implements CreateTransactionUseCase {
     @Override
     public Transaction execute(Transaction transaction) throws ViolationException {
 
-        if (!this.transactionServicePort.isValid(transaction)) {
-            throw new TransactionViolationsException(this.transactionServicePort.getViolations());
+        if (!transactionServicePort.isValid(transaction)) {
+            throw new TransactionViolationsException(transactionServicePort.getViolations());
         }
 
-        return this.transactionServicePort.createTransaction(transaction);
+        return transactionServicePort.createTransaction(transaction);
     }
 }

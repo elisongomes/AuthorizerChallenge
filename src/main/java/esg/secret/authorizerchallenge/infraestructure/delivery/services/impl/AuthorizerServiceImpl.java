@@ -21,7 +21,7 @@ public class AuthorizerServiceImpl implements AuthorizerService {
     public boolean run() {
         try (Scanner scan = new Scanner(System.in)) {
             while (scan.hasNext()) {
-                this.parserLine(scan.nextLine());
+                parserLine(scan.nextLine());
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -38,10 +38,10 @@ public class AuthorizerServiceImpl implements AuthorizerService {
             String operation = objJson.fields().next().getKey();
             switch (operation) {
                 case "account":
-                    this.processAccount(objJson.get("account"));
+                    processAccount(objJson.get("account"));
                     break;
                 case "transaction":
-                    this.processTransaction(objJson.get("transaction"));
+                    processTransaction(objJson.get("transaction"));
                     break;
             }
         } catch (Exception ex) {

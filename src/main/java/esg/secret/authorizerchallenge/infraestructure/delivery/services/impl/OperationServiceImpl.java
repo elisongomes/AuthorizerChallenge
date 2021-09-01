@@ -38,7 +38,7 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public OperationRest account(AccountDTO accountDTO) {
-        this.violations.clear();
+        violations.clear();
         OperationRest operationRest = new OperationRest();
         try {
             operationRest.setAccount(
@@ -63,7 +63,7 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public OperationRest transaction(TransactionDTO transaction) {
-        this.violations.clear();
+        violations.clear();
         OperationRest operationRest = new OperationRest();
         try {
             createTransactionUseCase.execute(
@@ -85,7 +85,7 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public List<String> getViolations() {
-        return this.violations;
+        return violations;
     }
 
 

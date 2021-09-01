@@ -14,13 +14,13 @@ public class InsufficientLimitViolation extends AbstractInsufficientLimitViolati
         Account account = accountRepository.findAccount();
         int newAvailableLimit = account.getAvailableLimit() - transaction.getAmount();
         if (newAvailableLimit < 0) {
-            this.fail();
+            fail();
         }
         return true;
     }
 
     @Override
     public boolean stopOnFails() {
-        return this.stopOnFails;
+        return stopOnFails;
     }
 }

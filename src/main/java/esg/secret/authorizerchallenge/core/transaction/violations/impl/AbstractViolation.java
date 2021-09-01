@@ -5,5 +5,4 @@ import esg.secret.authorizerchallenge.core.transaction.violations.TransactionVio
 
 public abstract class AbstractViolation implements TransactionViolation {
     public boolean stopOnFails = false;
-    protected Transaction transaction = null;
 }

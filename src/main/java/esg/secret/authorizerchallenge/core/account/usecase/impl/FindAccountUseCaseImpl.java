@@ -14,6 +14,6 @@ public class FindAccountUseCaseImpl implements FindAccountUseCase {
 
     @Override
     public Account execute() {
-        return this.accountServicePort.findAccount();
+        return accountServicePort.findAccount();
     }
 }

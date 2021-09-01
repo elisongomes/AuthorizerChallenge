@@ -38,9 +38,9 @@ public class OperationRest {
     }
 
     public void addViolation(String violation) {
-        if (this.violations == null) {
-            this.violations = new ArrayList<>();
+        if (violations == null) {
+            violations = new ArrayList<>();
         }
-        this.violations.add(violation);
+        violations.add(violation);
     }
 }

@@ -7,18 +7,18 @@ import esg.secret.authorizerchallenge.infraestructure.shared.exceptions.Violatio
 
 public class CardNotActiveViolation extends AbstractCardNotActiveViolation {
     public CardNotActiveViolation() {
-        this.stopOnFails = true;
+        stopOnFails = true;
     }
     @Override
     public boolean validate(Transaction transaction) throws ViolationException {
         if (!(new AccountRepositoryImpl()).accountIsActive()) {
-            this.fail();
+            fail();
         }
         return true;
     }
 
     @Override
     public boolean stopOnFails() {
-        return this.stopOnFails;
+        return stopOnFails;
     }
 }

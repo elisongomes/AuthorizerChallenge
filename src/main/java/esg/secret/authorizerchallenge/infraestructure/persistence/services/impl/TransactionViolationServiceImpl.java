@@ -20,7 +20,7 @@ public class TransactionViolationServiceImpl implements TransactionViolationServ
 
     @Override
     public List<String> getViolations() {
-        return this.violations;
+        return violations;
     }
 
     @Override

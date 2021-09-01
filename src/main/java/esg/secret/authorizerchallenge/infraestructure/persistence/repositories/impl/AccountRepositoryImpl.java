@@ -13,8 +13,8 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public Account createAccount(Account account) {
-        this.addOperation(account, null);
-        return this.findAccount();
+        addOperation(account, null);
+        return findAccount();
     }
 
     @Override
@@ -24,15 +24,15 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public boolean accountHasBeenInitialized() {
-        return this.findAccount() != null;
+        return findAccount() != null;
     }
 
     @Override
     public boolean accountIsActive() {
-        if (!this.accountHasBeenInitialized()) {
+        if (!accountHasBeenInitialized()) {
             return false;
         }
-        return this.findAccount().isActiveCard();
+        return findAccount().isActiveCard();
     }
 
     @Override
@@ -47,11 +47,11 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public void debit(Transaction transaction) {
-        Account account = this.findAccount();
-        int newAvailableLimit = this.findAccount().getAvailableLimit() - transaction.getAmount();
+        Account account = findAccount();
+        int newAvailableLimit = account.getAvailableLimit() - transaction.getAmount();
         if (newAvailableLimit >= 0) {
             account.setAvailableLimit(newAvailableLimit);
-            this.addOperation(account, transaction);
+            addOperation(account, transaction);
         }
     }
 

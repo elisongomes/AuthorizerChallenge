@@ -17,13 +17,13 @@ public class DoubleTransactionViolation extends AbstractDoubleTransactionViolati
             transaction.getMerchant(),
             transaction.getAmount()
         ).size() >= RATE_LIMIT_TRANSACTION_COUNT) {
-            this.fail();
+            fail();
         }
         return true;
     }
 
     @Override
     public boolean stopOnFails() {
-        return this.stopOnFails;
+        return stopOnFails;
     }
 }

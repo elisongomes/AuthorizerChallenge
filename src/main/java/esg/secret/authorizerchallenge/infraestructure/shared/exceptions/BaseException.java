@@ -19,7 +19,7 @@ public abstract class BaseException extends Exception {
     }
 
     public int getCode() {
-        return this.code;
+        return code;
     }
 
     public List<String> getMessages() {

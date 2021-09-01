@@ -16,9 +16,9 @@ public class CreateAccountUseCaseImpl implements CreateAccountUseCase {
 
     @Override
     public Account execute(Account account) throws ViolationException {
-        if (this.accountServicePort.accountHasBeenInitialized()) {
+        if (accountServicePort.accountHasBeenInitialized()) {
             throw new AccountAlreadyInitializedException();
         }
-        return this.accountServicePort.createAccount(account);
+        return accountServicePort.createAccount(account);
     }
 }
