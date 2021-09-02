@@ -3,6 +3,7 @@ package esg.secret.authorizerchallenge.infraestructure.delivery.services.impl;
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.AccountDTO;
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.TransactionDTO;
 import esg.secret.authorizerchallenge.infraestructure.delivery.responses.JsonResponse;
+import esg.secret.authorizerchallenge.infraestructure.delivery.responses.ParserResponse;
 import esg.secret.authorizerchallenge.infraestructure.delivery.rest.OperationRest;
 import esg.secret.authorizerchallenge.infraestructure.delivery.services.AuthorizerService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,27 +32,29 @@ public class AuthorizerServiceImpl implements AuthorizerService {
     }
 
     @Override
-    public boolean parserLine(String json) {
+    public ParserResponse parserLine(String json) {
+        ParserResponse result = null;
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode objJson = mapper.readTree(json);
             String operation = objJson.fields().next().getKey();
             switch (operation) {
                 case "account":
-                    processAccount(objJson.get("account"));
-                    break;
+                    return processAccount(objJson.get("account"));
                 case "transaction":
-                    processTransaction(objJson.get("transaction"));
-                    break;
+                    return processTransaction(objJson.get("transaction"));
             }
         } catch (Exception ex) {
-
+            return new ParserResponse(
+                false,
+                ex.getMessage()
+            );
         }
-        return false;
+        return result;
     }
 
     @Override
-    public boolean processAccount(JsonNode objJson) {
+    public ParserResponse processAccount(JsonNode objJson) {
         boolean activeCard = false;
         int availableLimit = 0;
 
@@ -69,12 +72,15 @@ public class AuthorizerServiceImpl implements AuthorizerService {
                 availableLimit
             )
         );
-        JsonResponse.stdout(operationRest);
-        return operationRest.getViolations().isEmpty();
+        return new ParserResponse(
+            true,
+            JsonResponse.stdout(operationRest),
+            operationRest.getViolations()
+        );
     }
 
     @Override
-    public boolean processTransaction(JsonNode objJson) {
+    public ParserResponse processTransaction(JsonNode objJson) {
         String merchant = "";
         int amount = 0;
         Date datetime = null;
@@ -103,7 +109,10 @@ public class AuthorizerServiceImpl implements AuthorizerService {
                 datetime
             )
         );
-        JsonResponse.stdout(operationRest);
-        return operationRest.getViolations().isEmpty();
+        return new ParserResponse(
+            true,
+            JsonResponse.stdout(operationRest),
+            operationRest.getViolations()
+        );
     }
 }

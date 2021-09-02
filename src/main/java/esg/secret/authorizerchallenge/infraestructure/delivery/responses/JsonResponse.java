@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonResponse {
-    public static void stdout(OperationRest operationRest) {
+    public static String stdout(OperationRest operationRest) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
 
@@ -33,5 +33,6 @@ public class JsonResponse {
             e.printStackTrace();
         }
         System.out.println(jsonString);
+        return jsonString;
     }
 }

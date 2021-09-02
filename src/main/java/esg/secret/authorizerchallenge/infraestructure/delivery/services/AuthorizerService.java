@@ -1,13 +1,14 @@
 package esg.secret.authorizerchallenge.infraestructure.delivery.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import esg.secret.authorizerchallenge.infraestructure.delivery.responses.ParserResponse;
 
 public interface AuthorizerService {
     boolean run();
 
-    boolean parserLine(String operation);
+    ParserResponse parserLine(String operation);
 
-    boolean processAccount(JsonNode objJson);
+    ParserResponse processAccount(JsonNode objJson);
 
-    boolean processTransaction(JsonNode objJson);
+    ParserResponse processTransaction(JsonNode objJson);
 }
