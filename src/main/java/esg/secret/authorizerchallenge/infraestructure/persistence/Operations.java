@@ -35,6 +35,10 @@ public class Operations {
         operationsEntity.add(operationEntity);
     }
 
+    public void clearOperations() {
+        operationsEntity.clear();
+    }
+
     public List<OperationEntity> getOperations() {
         return operationsEntity;
     }

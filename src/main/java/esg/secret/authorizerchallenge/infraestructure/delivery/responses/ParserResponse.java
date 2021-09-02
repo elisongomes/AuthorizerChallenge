@@ -39,4 +39,12 @@ public class ParserResponse {
     public void setViolations(List<String> violations) {
         this.violations = violations;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

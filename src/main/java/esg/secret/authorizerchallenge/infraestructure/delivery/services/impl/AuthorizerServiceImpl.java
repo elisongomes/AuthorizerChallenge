@@ -33,7 +33,6 @@ public class AuthorizerServiceImpl implements AuthorizerService {
 
     @Override
     public ParserResponse parserLine(String json) {
-        ParserResponse result = null;
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode objJson = mapper.readTree(json);
@@ -43,6 +42,8 @@ public class AuthorizerServiceImpl implements AuthorizerService {
                     return processAccount(objJson.get("account"));
                 case "transaction":
                     return processTransaction(objJson.get("transaction"));
+                default:
+                    throw new Exception("Unknown operation");
             }
         } catch (Exception ex) {
             return new ParserResponse(
@@ -50,7 +51,6 @@ public class AuthorizerServiceImpl implements AuthorizerService {
                 ex.getMessage()
             );
         }
-        return result;
     }
 
     @Override
