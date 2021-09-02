@@ -25,6 +25,7 @@
             <version>${jackson.version}</version>
         </dependency>
     </dependencies>
+    <packaging>jar</packaging>
     <build>
         <plugins>
             <plugin>
@@ -38,7 +39,18 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <finalName>authorize</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
