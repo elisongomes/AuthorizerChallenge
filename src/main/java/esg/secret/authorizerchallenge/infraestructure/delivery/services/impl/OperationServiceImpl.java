@@ -8,7 +8,6 @@ import esg.secret.authorizerchallenge.core.transaction.usecase.impl.CreateTransa
 import esg.secret.authorizerchallenge.infraestructure.delivery.converters.AccountRestConverter;
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.AccountDTO;
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.TransactionDTO;
-import esg.secret.authorizerchallenge.infraestructure.delivery.rest.AccountRest;
 import esg.secret.authorizerchallenge.infraestructure.delivery.rest.OperationRest;
 import esg.secret.authorizerchallenge.infraestructure.delivery.services.OperationService;
 import esg.secret.authorizerchallenge.infraestructure.persistence.services.impl.AccountServiceImpl;
@@ -40,22 +39,20 @@ public class OperationServiceImpl implements OperationService {
     public OperationRest account(AccountDTO accountDTO) {
         violations.clear();
         OperationRest operationRest = new OperationRest();
+        Account account;
         try {
-            operationRest.setAccount(
-                accountRestConverter.mapToRest(
-                    createAccountUseCase.execute(
-                        new Account(
-                            accountDTO.isActiveCard(),
-                            accountDTO.getAvailableLimit()
-                        )
-                    )
+            account = createAccountUseCase.execute(
+                new Account(
+                    accountDTO.isActiveCard(),
+                    accountDTO.getAvailableLimit()
                 )
             );
         } catch (ViolationException ex) {
             operationRest.addViolation(ex.getMessage());
+            account = findAccountUseCase.execute();
         }
         operationRest.setAccount(
-            accountRestConverter.mapToRest(findAccountUseCase.execute())
+            accountRestConverter.mapToRest(account)
         );
 
         return operationRest;
