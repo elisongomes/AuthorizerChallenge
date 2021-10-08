@@ -1,6 +1,8 @@
 {"transaction": {"merchant": "Burger King", "amount": 20, "time": "2021-08-20T15:30:00.000Z"}}
 {"account": {"active-card": true, "available-limit": 100}}
+{ "allow-list": { "active": true } }
 {"transaction": {"merchant": "Habbib's", "amount": 200, "time": "2021-08-21T15:30:00.000Z"}}
+{ "allow-list": { "active": false } }
 {"transaction": {"merchant": "Burger King", "amount": 20, "time": "2021-08-25T15:30:00.000Z"}}
 {"transaction": {"merchant": "Burger King", "amount": 25, "time": "2021-08-25T15:30:05.000Z"}}
 {"transaction": {"merchant": "Burger King", "amount": 30, "time": "2021-08-25T15:30:10.000Z"}}

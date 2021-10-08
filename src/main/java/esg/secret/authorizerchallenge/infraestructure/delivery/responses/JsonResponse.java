@@ -17,6 +17,7 @@ public class JsonResponse {
         if (operationRest.getAccount() != null) {
             accountNode.put("active-card", operationRest.getAccount().isActiveCard());
             accountNode.put("available-limit", operationRest.getAccount().getAvailableLimit());
+            accountNode.put("allow-listed", operationRest.getAccount().isAllowListed());
         }
         rootNode.set("account", accountNode);
 

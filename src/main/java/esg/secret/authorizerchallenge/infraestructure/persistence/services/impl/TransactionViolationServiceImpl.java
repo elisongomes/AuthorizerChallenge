@@ -2,6 +2,7 @@ package esg.secret.authorizerchallenge.infraestructure.persistence.services.impl
 
 import esg.secret.authorizerchallenge.core.transaction.Transaction;
 import esg.secret.authorizerchallenge.core.transaction.violations.TransactionViolation;
+import esg.secret.authorizerchallenge.infraestructure.persistence.repositories.impl.AccountRepositoryImpl;
 import esg.secret.authorizerchallenge.infraestructure.persistence.services.TransactionViolationService;
 import esg.secret.authorizerchallenge.infraestructure.shared.exceptions.ViolationException;
 
@@ -27,6 +28,11 @@ public class TransactionViolationServiceImpl implements TransactionViolationServ
     public boolean validate(Transaction transaction) {
         violations.clear();
         for (TransactionViolation transactionViolation : transactionViolations) {
+            if (transactionViolation.validateOnlyAllowListed()
+                && (new AccountRepositoryImpl()).findAccount().isAllowListed()) {
+                continue;
+            }
+
             try {
                 transactionViolation.validate(transaction);
             } catch (ViolationException ex) {

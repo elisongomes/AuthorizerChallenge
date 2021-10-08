@@ -84,4 +84,12 @@ public class AccountRepositoryImpl implements AccountRepository {
         );
     }
 
+    @Override
+    public Account updateAllowList(boolean allowedList) {
+        Account account = findAccount();
+        account.setAllowListed(allowedList);
+        addOperation(account, null);
+        return account;
+    }
+
 }

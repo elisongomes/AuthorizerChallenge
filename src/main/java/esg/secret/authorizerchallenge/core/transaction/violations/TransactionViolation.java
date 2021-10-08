@@ -9,4 +9,6 @@ public interface TransactionViolation {
     ViolationException fail() throws ViolationException;
 
     boolean stopOnFails();
+
+    boolean validateOnlyAllowListed();
 }

@@ -41,6 +41,16 @@ public class AuthorizerServiceTest {
     }
 
     @Test
+    void test01_AllowListWithAccountNotInitialized() {
+        ParserResponse parserResponse = authorizerService.parserLine(
+            "{ \"allow-list\": { \"active\": true } }"
+        );
+        assertTrue(parserResponse.isSuccess());
+        assertEquals(1, parserResponse.getViolations().size());
+        assertTrue(parserResponse.getViolations().contains("account-not-initialized"));
+    }
+
+    @Test
     void test02_AccountInitializeInactiveCard() {
         ParserResponse parserResponse = authorizerService.parserLine(
             "{\"account\": {\"active-card\": false, \"available-limit\": 100}}"
@@ -150,5 +160,49 @@ public class AuthorizerServiceTest {
         assertTrue(parserResponse.isSuccess());
         assertNull(parserResponse.getViolations());
         assertEquals(30, Operations.getInstance().getAccount().getAvailableLimit());
+    }
+
+    @Test
+    void test30_UpdateAccountAllowList() {
+        ParserResponse parserResponse = authorizerService.parserLine(
+            "{ \"allow-list\": { \"active\": true } }"
+        );
+        assertTrue(parserResponse.isSuccess());
+        assertNull(parserResponse.getViolations());
+    }
+    @Test
+    void test31_TransactionHighFrequencySmallInterval01() {
+        ParserResponse parserResponse = authorizerService.parserLine(
+            "{\"transaction\": {\"merchant\": \"Habbib's\", \"amount\": 1, \"time\": \"2021-10-07T12:30:00.000Z\"}}"
+        );
+        assertTrue(parserResponse.isSuccess());
+        assertNull(parserResponse.getViolations());
+        assertEquals(29, Operations.getInstance().getAccount().getAvailableLimit());
+    }
+    @Test
+    void test31_TransactionHighFrequencySmallInterval02() {
+        ParserResponse parserResponse = authorizerService.parserLine(
+            "{\"transaction\": {\"merchant\": \"Habbib's\", \"amount\": 1, \"time\": \"2021-10-07T12:30:10.000Z\"}}"
+        );
+        assertTrue(parserResponse.isSuccess());
+        assertNull(parserResponse.getViolations());
+        assertEquals(28, Operations.getInstance().getAccount().getAvailableLimit());
+    }
+    @Test
+    void test31_TransactionHighFrequencySmallInterval03() {
+        ParserResponse parserResponse = authorizerService.parserLine(
+            "{\"transaction\": {\"merchant\": \"Habbib's\", \"amount\": 1, \"time\": \"2021-10-07T12:31:00.000Z\"}}"
+        );
+        assertTrue(parserResponse.isSuccess());
+        assertNull(parserResponse.getViolations());
+        assertEquals(27, Operations.getInstance().getAccount().getAvailableLimit());
+    }
+    @Test
+    void test31_TransactionHighFrequencySmallInterval04Violation() {
+        ParserResponse parserResponse = authorizerService.parserLine(
+            "{\"transaction\": {\"merchant\": \"Habbib's\", \"amount\": 1, \"time\": \"2021-10-07T12:32:00.000Z\"}}"
+        );
+        assertTrue(parserResponse.isSuccess());
+        assertNull(parserResponse.getViolations());
     }
 }

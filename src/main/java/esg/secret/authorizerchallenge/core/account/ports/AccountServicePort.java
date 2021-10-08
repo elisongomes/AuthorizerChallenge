@@ -11,4 +11,6 @@ public interface AccountServicePort {
     boolean accountHasBeenInitialized();
 
     boolean accountIsActive();
+
+    Account updateAllowList(boolean allowedList);
 }

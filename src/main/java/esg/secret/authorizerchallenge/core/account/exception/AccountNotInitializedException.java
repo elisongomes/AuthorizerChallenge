@@ -1,4 +1,4 @@
-package esg.secret.authorizerchallenge.core.transaction.exception;
+package esg.secret.authorizerchallenge.core.account.exception;
 
 import esg.secret.authorizerchallenge.infraestructure.shared.exceptions.ViolationException;
 
