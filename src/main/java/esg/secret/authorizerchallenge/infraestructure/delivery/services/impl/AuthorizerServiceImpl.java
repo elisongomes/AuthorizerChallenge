@@ -1,6 +1,7 @@
 package esg.secret.authorizerchallenge.infraestructure.delivery.services.impl;
 
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.AccountDTO;
+import esg.secret.authorizerchallenge.infraestructure.delivery.dto.AllowListDTO;
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.TransactionDTO;
 import esg.secret.authorizerchallenge.infraestructure.delivery.responses.JsonResponse;
 import esg.secret.authorizerchallenge.infraestructure.delivery.responses.ParserResponse;
@@ -42,6 +43,8 @@ public class AuthorizerServiceImpl implements AuthorizerService {
                     return processAccount(objJson.get("account"));
                 case "transaction":
                     return processTransaction(objJson.get("transaction"));
+                case "allow-list":
+                    return processAllowList(objJson.get("allow-list"));
                 default:
                     throw new Exception("Unknown operation");
             }
@@ -114,5 +117,27 @@ public class AuthorizerServiceImpl implements AuthorizerService {
             JsonResponse.stdout(operationRest),
             operationRest.getViolations()
         );
+    }
+
+    @Override
+    public ParserResponse processAllowList(JsonNode objJson) {
+
+        boolean allowedList = false;
+
+        if (objJson.get("active") != null) {
+            allowedList = objJson.get("active").asBoolean(false);
+        }
+
+        OperationRest operationRest = operationService.allowList(
+            new AllowListDTO(
+                allowedList
+            )
+        );
+        return new ParserResponse(
+            true,
+            JsonResponse.stdout(operationRest),
+            operationRest.getViolations()
+        );
+
     }
 }

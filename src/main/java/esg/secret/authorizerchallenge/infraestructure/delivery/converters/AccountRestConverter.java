@@ -7,7 +7,7 @@ import esg.secret.authorizerchallenge.infraestructure.shared.RestConverter;
 public class AccountRestConverter implements RestConverter<AccountRest, Account> {
     @Override
     public Account mapToEntity(final AccountRest rest) {
-        return new Account(rest.isActiveCard(), rest.getAvailableLimit());
+        return new Account(rest.isActiveCard(), rest.getAvailableLimit(), rest.isAllowListed());
     }
 
     @Override
@@ -15,6 +15,6 @@ public class AccountRestConverter implements RestConverter<AccountRest, Account>
         if (entity == null) {
             return null;
         }
-        return new AccountRest(entity.isActiveCard(), entity.getAvailableLimit());
+        return new AccountRest(entity.isActiveCard(), entity.getAvailableLimit(), entity.isAllowListed());
     }
 }

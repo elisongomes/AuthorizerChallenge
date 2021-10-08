@@ -11,4 +11,6 @@ public interface AuthorizerService {
     ParserResponse processAccount(JsonNode objJson);
 
     ParserResponse processTransaction(JsonNode objJson);
+
+    ParserResponse processAllowList(JsonNode objJson);
 }

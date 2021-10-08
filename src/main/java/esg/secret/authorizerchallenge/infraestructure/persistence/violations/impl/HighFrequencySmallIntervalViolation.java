@@ -9,8 +9,13 @@ public class HighFrequencySmallIntervalViolation extends AbstractHighFrequencySm
     private final int RATE_LIMIT_TRANSACTION_COUNT = 3;
     private final int RATE_LIMIT_TRANSACTION_MINUTE = 2;
 
+
     @Override
     public boolean validate(Transaction transaction) throws ViolationException {
+        if ((new AccountRepositoryImpl()).findAccount().isAllowListed()) {
+            return true;
+        }
+
         if ((new AccountRepositoryImpl()).getTransactionsByInterval(
             transaction.getDateTime().getTime(),
             RATE_LIMIT_TRANSACTION_MINUTE
@@ -23,5 +28,10 @@ public class HighFrequencySmallIntervalViolation extends AbstractHighFrequencySm
     @Override
     public boolean stopOnFails() {
         return stopOnFails;
+    }
+
+    @Override
+    public boolean validateOnlyAllowListed() {
+        return true;
     }
 }

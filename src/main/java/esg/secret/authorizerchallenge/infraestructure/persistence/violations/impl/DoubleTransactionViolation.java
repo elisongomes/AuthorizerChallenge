@@ -26,4 +26,9 @@ public class DoubleTransactionViolation extends AbstractDoubleTransactionViolati
     public boolean stopOnFails() {
         return stopOnFails;
     }
+
+    @Override
+    public boolean validateOnlyAllowListed() {
+        return true;
+    }
 }

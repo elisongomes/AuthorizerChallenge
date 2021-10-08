@@ -26,4 +26,6 @@ public interface AccountRepository {
         String merchant,
         int amount
     );
+
+    Account updateAllowList(boolean allowedList);
 }

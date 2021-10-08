@@ -1,12 +1,15 @@
 package esg.secret.authorizerchallenge.infraestructure.delivery.services.impl;
 
 import esg.secret.authorizerchallenge.core.account.Account;
+import esg.secret.authorizerchallenge.core.account.usecase.UpdateAllowListUseCase;
 import esg.secret.authorizerchallenge.core.account.usecase.impl.CreateAccountUseCaseImpl;
 import esg.secret.authorizerchallenge.core.account.usecase.impl.FindAccountUseCaseImpl;
+import esg.secret.authorizerchallenge.core.account.usecase.impl.UpdateAllowListUseCaseImpl;
 import esg.secret.authorizerchallenge.core.transaction.Transaction;
 import esg.secret.authorizerchallenge.core.transaction.usecase.impl.CreateTransactionUseCaseImpl;
 import esg.secret.authorizerchallenge.infraestructure.delivery.converters.AccountRestConverter;
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.AccountDTO;
+import esg.secret.authorizerchallenge.infraestructure.delivery.dto.AllowListDTO;
 import esg.secret.authorizerchallenge.infraestructure.delivery.dto.TransactionDTO;
 import esg.secret.authorizerchallenge.infraestructure.delivery.rest.OperationRest;
 import esg.secret.authorizerchallenge.infraestructure.delivery.services.OperationService;
@@ -32,6 +35,11 @@ public class OperationServiceImpl implements OperationService {
     private final CreateTransactionUseCaseImpl createTransactionUseCase = new CreateTransactionUseCaseImpl(
         new TransactionServiceImpl()
     );
+
+    private final UpdateAllowListUseCase updateAllowListUseCase = new UpdateAllowListUseCaseImpl(
+        new AccountServiceImpl()
+    ) {
+    };
 
     private final List<String> violations = new ArrayList<>();
 
@@ -83,6 +91,24 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public List<String> getViolations() {
         return violations;
+    }
+
+    @Override
+    public OperationRest allowList(AllowListDTO allowListDTO) {
+        violations.clear();
+        OperationRest operationRest = new OperationRest();
+        Account account;
+        try {
+            account = updateAllowListUseCase.execute(allowListDTO.isActive());
+        } catch (ViolationException ex) {
+            operationRest.addViolation(ex.getMessage());
+            account = findAccountUseCase.execute();
+        }
+        operationRest.setAccount(
+            accountRestConverter.mapToRest(account)
+        );
+
+        return operationRest;
     }
 
 

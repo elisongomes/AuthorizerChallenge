@@ -27,4 +27,9 @@ public class AccountServiceImpl implements AccountServicePort {
     public boolean accountIsActive() {
         return accountRepository.accountIsActive();
     }
+
+    @Override
+    public Account updateAllowList(boolean allowedList) {
+        return accountRepository.updateAllowList(allowedList);
+    }
 }

@@ -5,10 +5,18 @@ import java.io.Serializable;
 public class AccountRest implements Serializable {
     private boolean activeCard;
     private int availableLimit;
+    private boolean allowListed;
 
     public AccountRest(boolean activeCard, int availableLimit) {
         this.activeCard = activeCard;
         this.availableLimit = availableLimit;
+        this.allowListed = false;
+    }
+
+    public AccountRest(boolean activeCard, int availableLimit, boolean allowListed) {
+        this.activeCard = activeCard;
+        this.availableLimit = availableLimit;
+        this.allowListed = allowListed;
     }
 
     public boolean isActiveCard() {
@@ -25,5 +33,13 @@ public class AccountRest implements Serializable {
 
     public void setAvailableLimit(int availableLimit) {
         this.availableLimit = availableLimit;
+    }
+
+    public boolean isAllowListed() {
+        return allowListed;
+    }
+
+    public void setAllowListed(boolean allowListed) {
+        this.allowListed = allowListed;
     }
 }
